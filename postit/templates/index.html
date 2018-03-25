@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+
+{% if user.is_authenticated %}
+<a href="{{ url_for('add_page') }}">Create New Page</a>
+<p>logged in as {{user.name}}</p> 
+<a type="button" href="{{ url_for('logout') }}">logout</a>
+{% else %}
  <form action="/login" method="post">
     <p><input type=text name=username>
     <p><input type=password name=password>
     <p><input type=submit value=Login>
 </form>
-{% if user.is_authenticated %}
-<p>logged in as {{user.name}}</p> 
-<a type="button" href="{{ url_for('logout') }}">logout</a>
 {% endif %}
 
 

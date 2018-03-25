@@ -1,6 +1,8 @@
 from postit.app import app, postit_pages, all_users
 from flask import render_template, request , abort , redirect , Response ,url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from postit.model.PostitPage import PostitPage
+from postit.model.Users import User
 
 login_manager = LoginManager()
 login_manager.setup_app(app)
@@ -14,6 +16,16 @@ def index():
 def page(page_name):
     page = postit_pages.get_page(page_name)
     return render_template("postit_page.html", page=page)
+
+@app.route('/add_page', methods=['GET', 'POST'])
+def add_page():
+    if request.method == 'POST':
+        page_name = request.form['name']
+        user = User(current_user.name, current_user.password)
+        page = PostitPage(page_name, user)
+        postit_pages.add_postitpage(page)
+        return redirect(url_for('index'))
+    return render_template("add_page.html")
 
 @app.route('/login' , methods=['GET' , 'POST'])
 def login():
@@ -37,7 +49,7 @@ def login():
 def logout():
     logout_user()
     current_user.authenticated = False
-    return Response('<p>Logged out</p>')
+    return redirect(url_for('index'))
 
 @login_manager.user_loader
 def load_user(user_name):
