@@ -14,20 +14,20 @@ class PostitPage:
         return self._posts
 
     @property
+    def owner(self):
+        return self._owner.name
+    
+    @owner.setter
+    def owner(self, name):
+        self._owner.name = name
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
     def name(self):
         return self._name
     
-    @name.setter
-    def name(self, name):
-        self._name = name
-
-    @property
-    def owner(self):
-        return self._owner
-
-    @owner.setter
-    def owner(self):
-        return self._owner
-    
     def __str__(self):
-        return "Name: " + self.name + " Owner: " + self.owner
+        return "Name: " + self._name + " Owner: " + self._owner.name

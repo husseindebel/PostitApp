@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<p>Something cool is hapenning!</p>
-{{ pages }}
+ <form action="/login" method="post">
+    <p><input type=text name=username>
+    <p><input type=password name=password>
+    <p><input type=submit value=Login>
+</form>
+{% if user.is_authenticated %}
+<p>logged in as {{user.name}}</p> 
+<a type="button" href="{{ url_for('logout') }}">logout</a>
+{% endif %}
+
+
+{% for page in pages %}
+    <a href="{{ url_for('page', page_name=page.name) }}">{{page.name}}</a>
+{% endfor %}
+
 {% endblock %}
