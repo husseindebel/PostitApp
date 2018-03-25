@@ -1,0 +1,7 @@
+owner pass
+hussein pass
+john pass
+linda pass
+all owner
+movies hussein
+games john
