@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>Welcome too {{page.name}} Page</p>
+    <p>Owned by {{page.owner}}</p>
+    <form action="/p/{{page.name}}" method='POST'>
+        Post Something!!: <input type="text" name="post"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p>Here are the posts...</p>
+    {% for post in page.posts %}
+        <p>{{post.title}}</p>
+        <p>{{post.user.name}}</p>
+    {% endfor %}
+{% endblock %}
