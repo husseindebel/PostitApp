@@ -6,12 +6,7 @@
   </head>
   <body>
     <div class="nav">
-      <ul>
-        <li>
-          Home
-        </li>
-        <li>All</li>
-      </ul>
+      <a href="{{ url_for('index') }}">Home</a>
     </div>
     <div id="content">{% block content %}{% endblock %}</div>
   </body>

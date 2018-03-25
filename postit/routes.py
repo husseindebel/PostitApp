@@ -3,7 +3,7 @@ from flask import render_template, request , abort , redirect , Response ,url_fo
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from postit.model.PostitPage import PostitPage
 from postit.model.Users import User
-
+from postit.model.Posts import Post
 login_manager = LoginManager()
 login_manager.setup_app(app)
 
@@ -11,17 +11,24 @@ login_manager.setup_app(app)
 def index():
     return render_template("index.html", pages=postit_pages.postitpages, user=current_user)
 
-@app.route("/p/<page_name>")
+@app.route("/p/<page_name>", methods=['GET', 'POST'])
 @login_required
 def page(page_name):
     page = postit_pages.get_page(page_name)
+    print(page.posts)
+    if request.method == 'POST':
+        post = request.form['post']
+        user = all_users.get_user(current_user.name)
+        new_post = Post(user, post)
+        page.add_posts(new_post)
+        return render_template("postit_page.html", page=page)
     return render_template("postit_page.html", page=page)
 
 @app.route('/add_page', methods=['GET', 'POST'])
 def add_page():
     if request.method == 'POST':
         page_name = request.form['name']
-        user = User(current_user.name, current_user.password)
+        user = all_users.get_user(current_user.name)
         page = PostitPage(page_name, user)
         postit_pages.add_postitpage(page)
         return redirect(url_for('index'))

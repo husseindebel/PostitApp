@@ -7,6 +7,7 @@ class PostitPage:
 
     
     def add_posts(self, post):
+        print("hussein", post.title)
         self._posts.append(post)
 
     @property
