@@ -1,4 +1,3 @@
-from PostitPage import PostitPage
 class Postit:
     
     def __init__(self):
@@ -9,7 +8,12 @@ class Postit:
         self._postitpages.append(postitpage)
         if self._current_postitpage == None:
             self._current_postitpage = postitpage
-    
+
+    def get_page(self, name):
+        for page in self._postitpages:
+            if name == page.name:
+                return page
+
     @property
     def postitpages(self):
         return self._postitpages
@@ -22,10 +26,3 @@ class Postit:
     def current_postitpage(self, postitpage):
         if postitpage in self._postitpages:
             self._current_postitpage = postitpage
-
-
-if __name__ == "__main__":
-    something = Postit()
-    new_postitpage = PostitPage("hussein", "me")
-    something.add_postitpage(new_postitpage)
-    print(something.current_postitpage)
